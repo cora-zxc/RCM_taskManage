@@ -4,6 +4,10 @@ import InputFiles from 'react-input-files';
 import XLSX from 'xlsx';
 import SortableTable from './SortableTable';
 import * as script from './Script.js';
+import './index.css';
+import ManuallyCreate from './ManuallyCreate';
+import { Button } from 'antd';
+
 
 class InputFile extends React.Component{
     onImportExcel = files => {
@@ -21,7 +25,7 @@ class InputFile extends React.Component{
                 excel = excel.concat(
                     XLSX.utils.sheet_to_json(workbook.Sheets['DX'])
                 );
-                var data = script.getExcel(excel);
+                var exceldata = script.getExcel(excel);
                 var metadata = script.getMetadate();
                 ReactDOM.render(
                     <div>
@@ -30,9 +34,10 @@ class InputFile extends React.Component{
                 ReactDOM.render(
                     <div>
                         <InputFiles accept={this.props.accept} onChange={this.onImportExcel}>
-                            <button className="btn btn-primary">{this.props.name}</button>
+                            <Button className="extractButton" type="primary">{this.props.name}</Button>
                         </InputFiles>
-                        <SortableTable data={data} metadata={metadata}/>
+                        <ManuallyCreate name="手動新增" />
+                        <SortableTable columns={metadata} data={exceldata} />
                     </div>, 
                     document.getElementById('root'));
             } catch (e) {
@@ -44,11 +49,11 @@ class InputFile extends React.Component{
     };
     render(){
         return (
-            <div>
+            <span>
                 <InputFiles accept={this.props.accept} onChange={this.onImportExcel}>
-                    <button className="btn btn-primary">{this.props.name}</button>
+                    <Button className="extractButton" type="primary">{this.props.name}</Button>
                 </InputFiles>
-            </div>
+            </span>
         );
     };
 }

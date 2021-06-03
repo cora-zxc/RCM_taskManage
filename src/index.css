@@ -10,12 +10,12 @@ tr:nth-of-type(odd) {
 .ant-table-thead > tr > th {
   border-top: 1px solid #578cab;
   border-bottom: 1px solid #578cab;
-  padding: 12px 12px;
+  padding: 15px 3px;
   text-align:center;
 }
 .ant-table-tbody > tr > td{
   border-bottom: 1px solid #578cab; 
-  padding: 12px 8px;
+  padding: 12px 3px;
   text-align:center;
 }
 .ant-table-tbody tr:hover {
@@ -33,18 +33,21 @@ tr:nth-of-type(odd) {
 }
 
 /* for antd button */
-.extractButton{
+.extractButton {
   margin: 15px 10px 15px 0px;
 }
-
+.ant-btn {
+  padding: 2px 10px;
+}
 
 
 /* for antd form */
 .collection-create-form_last-form-item {
   margin-bottom: 0;
 }
-span > .extractButton{
+.manuallyCreatButton{
   float: right;
+  margin: 15px 10px 15px 0px;
 }
 .ant-form {  /*將表格改成三欄式*/
   display: flex;

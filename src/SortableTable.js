@@ -1,13 +1,8 @@
-
 import React from "react";
 import 'antd/dist/antd.css';
-import "react-table-6/react-table.css";
-import { MenuOutlined } from '@ant-design/icons';
-import { sortableContainer, sortableElement, sortableHandle } from 'react-sortable-hoc';
+import { sortableContainer, sortableElement } from 'react-sortable-hoc';
 import { Table } from 'antd';
 import arrayMove from 'array-move';
-
-const DragHandle = sortableHandle(() => <MenuOutlined style={{ cursor: 'grab', color: '#999' }} />);
 
 const SortableItem = sortableElement(props => <tr {...props} />);
 const SortableContainer = sortableContainer(props => <tbody {...props} />);
@@ -42,17 +37,18 @@ class SortableTable extends React.Component {
 	};
 	render() {
 		const { data } = this.state;
+		
 		return (
 			<Table
-			pagination={false}
+			pagination={false} //true -> 分頁
+			columns={this.props.columns}
 			dataSource={data}
-			columns={this.props.metadata}
 			rowKey="index"
 			components={
 				{
 					body: {
-					wrapper: this.DraggableContainer,
-					row: this.DraggableBodyRow,
+						wrapper: this.DraggableContainer,
+						row: this.DraggableBodyRow,
 					},
 				}
 			}

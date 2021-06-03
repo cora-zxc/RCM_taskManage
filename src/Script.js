@@ -1,8 +1,6 @@
 import { sortableHandle } from 'react-sortable-hoc';
 import { MenuOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import { useState } from 'react';
-import { Modal, Form, Input, Radio, Select, InputNumber } from 'antd';
+import ManuallyEdit from './ManuallyEdit';
 
 const DragHandle = sortableHandle(() => <MenuOutlined style={{ cursor: 'grab', color: '#999' }} />);
 
@@ -20,7 +18,7 @@ class MachineInfo{
     currentStatus = '未派工';
     eRackPositionNotTested = '';
     eRackPositionTested = '';
-    vp= '50';
+    pv= '50';
   }
 class Metadata{
 	constructor(title,dataIndex,className,render){
@@ -83,7 +81,7 @@ function changeToDeleteStatus (event){
         event.target.previousSibling.disabled=true;
         event.target.nextSibling.lastChild.disabled=true;
     }
-    console.log(event);
+    //console.log(event);
 }
 
 export function getMetadate(){
@@ -108,13 +106,12 @@ export function getMetadate(){
                 onClick={changeToDeleteStatus} >
                 刪
             </button>
+            <ManuallyEdit />
         </div>
     ));
 	data.push(new Metadata('派工狀態','currentStatus'));
 	data.push(new Metadata('e-Rack櫃位(待測)','eRackPositionNotTested'));
 	data.push(new Metadata('e-Rack櫃位(已測)','eRackPositionTested'));
-	data.push(new Metadata('優先序','vp'));
+	data.push(new Metadata('優先序','pv'));
 	return data;
 }
-
-
