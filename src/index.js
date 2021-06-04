@@ -5,8 +5,6 @@ import InputFile from './InputFile';
 import SortableTable from './SortableTable';
 import ManuallyCreate from './ManuallyCreate';
 
-
-
 ReactDOM.render(
   <div>
     <InputFile accept=".xlsx, .xls" name ="匯入Excel" />

@@ -9,17 +9,8 @@ import ManuallyEdit from './ManuallyEdit';
 
 const SortableItem = sortableElement(props => <tr {...props} />);
 const SortableContainer = sortableContainer(props => <tbody {...props} />);
-
-
-class Metadata{
-	constructor(title,dataIndex,className,render){
-		this.title = title;
-		this.dataIndex = dataIndex;
-		this.className = className;
-        this.render = render;
-	}
-}
 const DragHandle = sortableHandle(() => <MenuOutlined style={{ cursor: 'grab', color: '#999' }} />);
+
 class SortableTable extends React.Component {
 	constructor(props) {
 		super(props);
@@ -45,6 +36,14 @@ class SortableTable extends React.Component {
 		//console.log(event);
 	}
 	getMetadate = ()=> {
+		class Metadata{
+			constructor(title,dataIndex,className,render){
+				this.title = title;
+				this.dataIndex = dataIndex;
+				this.className = className;
+				this.render = render;
+			}
+		}
 		var data = [];
 		data.push(new Metadata('拖拉','sort','drag-visible',() => <DragHandle />));
 		data.push(new Metadata('任務編號','taskId','drag-visible'));

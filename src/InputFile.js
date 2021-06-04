@@ -7,25 +7,25 @@ import './index.css';
 import ManuallyCreate from './ManuallyCreate';
 import { Button } from 'antd';
 
-class MachineInfo{
-    constructor(index,taskId,produceBatchNo,productModelNo,currentQuantity,machinePosition){
-      this.index = index;
-      this.taskId = taskId;
-      this.produceBatchNo = produceBatchNo;
-      this.productModelNo = productModelNo;
-      this.currentQuantity = currentQuantity;
-      this.machinePosition = machinePosition;
-    }
-    key = '';
-    action = '';
-    currentStatus = '未派工';
-    eRackPositionNotTested = '';
-    eRackPositionTested = '';
-    pv= '50';
-}
 
 class InputFile extends React.Component{
     getExcel = (excel) => {
+        class MachineInfo{
+            constructor(index,taskId,produceBatchNo,productModelNo,currentQuantity,machinePosition){
+              this.index = index;
+              this.taskId = taskId;
+              this.produceBatchNo = produceBatchNo;
+              this.productModelNo = productModelNo;
+              this.currentQuantity = currentQuantity;
+              this.machinePosition = machinePosition;
+            }
+            key = '';
+            action = '';
+            currentStatus = '未派工';
+            eRackPositionNotTested = '';
+            eRackPositionTested = '';
+            pv= '50';
+        }
 		var data = [];
 		let date = new Date();
 		var y = date.getFullYear().toString();
