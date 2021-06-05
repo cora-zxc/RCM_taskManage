@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import InputFile from './InputFile';
-import SortableTable from './SortableTable';
 import ManuallyCreate from './ManuallyCreate';
+import SortableTable from './SortableTable';
 
 ReactDOM.render(
   <div>

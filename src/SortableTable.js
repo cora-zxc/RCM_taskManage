@@ -18,12 +18,10 @@ class SortableTable extends React.Component {
 			data: this.props.data
 		};
 	}
-	
 	changeOrderStatus = (event) => {
 		event.target.parentNode.parentNode.nextSibling.textContent = "已派工";
 		event.target.parentNode.parentNode.nextSibling.style.color = "blue";
 	}
-	
 	changeToDeleteStatus = (event) => {
 		var status = window.confirm("確定要刪除嗎？");
 		if(status){
@@ -36,6 +34,7 @@ class SortableTable extends React.Component {
 		//console.log(event);
 	}
 	getMetadate = ()=> {
+		//欄位項目的建構式
 		class Metadata{
 			constructor(title,dataIndex,className,render){
 				this.title = title;
@@ -44,6 +43,7 @@ class SortableTable extends React.Component {
 				this.render = render;
 			}
 		}
+		//生成欄位項目
 		var data = [];
 		data.push(new Metadata('拖拉','sort','drag-visible',() => <DragHandle />));
 		data.push(new Metadata('任務編號','taskId','drag-visible'));
@@ -80,7 +80,7 @@ class SortableTable extends React.Component {
 			const newData = arrayMove([].concat(data), oldIndex, newIndex).filter(el => !!el);
 			this.setState({data: newData});
 	  	}
-	};
+	}
 	DraggableContainer = props => (
 	  <SortableContainer
 		useDragHandle
@@ -89,30 +89,29 @@ class SortableTable extends React.Component {
 		onSortEnd={this.onSortEnd}
 		{...props}
 	  />
-	);
+	)
 	DraggableBodyRow = ({ className, style, ...restProps }) => {
 		const { data } = this.state;
 		const index = data.findIndex(x => x.index === restProps['data-row-key']);
 		return <SortableItem index={index} {...restProps} />;
-	};
-	
+	}
 	render() {
 		const { data } = this.state;
 		var metadata = this.getMetadate()
 		return (
 			<Table
-			pagination={false} //true -> 分頁
-			columns={metadata}
-			dataSource={data}
-			rowKey="index"
-			components={
-				{
-					body: {
-						wrapper: this.DraggableContainer,
-						row: this.DraggableBodyRow,
-					},
+				pagination={false} //true -> 分頁
+				columns={metadata}
+				dataSource={data}
+				rowKey="index"
+				components={
+					{
+						body: {
+							wrapper: this.DraggableContainer,
+							row: this.DraggableBodyRow,
+						},
+					}
 				}
-			}
 			/>
 		);
 	}

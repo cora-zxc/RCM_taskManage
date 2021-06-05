@@ -10,6 +10,18 @@ import { Button } from 'antd';
 
 class InputFile extends React.Component{
     getExcel = (excel) => {
+        //8碼日期y+m+d
+		let date = new Date();
+		var y = date.getFullYear().toString();
+		var m = (date.getMonth()+1).toString();
+			if(m < 10){
+				m = "0" + m;
+			}
+		var d = date.getDate().toString();
+            if (d < 10){
+                d = "0" + d ;
+            }
+        //欄位資料的建構式
         class MachineInfo{
             constructor(index,taskId,produceBatchNo,productModelNo,currentQuantity,machinePosition){
               this.index = index;
@@ -26,37 +38,33 @@ class InputFile extends React.Component{
             eRackPositionTested = '';
             pv= '50';
         }
-		var data = [];
-		let date = new Date();
-		var y = date.getFullYear().toString();
-		var m = (date.getMonth()+1).toString();
-			if( date.getMonth()+1 <10){
-				m = "0" + m;
-			}
-		var d = date.getDate().toString();
-		var i = 0,j,k,count = 0,task_id,batchNo,type,num,machine_position;
+        //迴圈取資料
+        var data = [];
+		var i = 0,j,k;
+        var m_index = 0;
+        var m_taskId,m_produceBatchNo,m_productModelNo,m_currentQuantity,m_machinePosition;
 		for(;excel.length > i; ++i){
 			if(excel[i].hasOwnProperty('矽格股份有限公司')){
 				if(excel[i]['矽格股份有限公司'].hasOwnProperty('length')){  
 					if(excel[i]['矽格股份有限公司'].indexOf('DX-') > -1){
-						machine_position = excel[i]['矽格股份有限公司'];
+						m_machinePosition = excel[i]['矽格股份有限公司'];
 						for(j = i + 2,k = 0;4 > k && excel.length > j && excel[j].hasOwnProperty('__EMPTY_2');++j,++k){
-							task_id =  y + m + d + excel[j].__EMPTY_2;
-							batchNo = excel[j].__EMPTY_2;
-							type = excel[j].__EMPTY_4;
-							num = excel[j].__EMPTY_7;
-							data[count] = new MachineInfo(count,task_id,batchNo,type,num,machine_position);
-							++count;
+							m_taskId =  y + m + d + excel[j].__EMPTY_2;
+							m_produceBatchNo = excel[j].__EMPTY_2;
+							m_productModelNo = excel[j].__EMPTY_4;
+							m_currentQuantity = excel[j].__EMPTY_7;
+							data[m_index] = new MachineInfo(m_index,m_taskId,m_produceBatchNo,m_productModelNo,m_currentQuantity,m_machinePosition);
+							++m_index;
 						}
 						if(excel[i].hasOwnProperty('__EMPTY_12')){
-							machine_position = excel[i].__EMPTY_12;
+							m_machinePosition = excel[i].__EMPTY_12;
 							for(j = i + 2,k = 0;4 > k && excel.length > j && excel[j].hasOwnProperty('__EMPTY_15');++j,++k){
-								task_id =  y + m + d + excel[j].__EMPTY_15;
-								batchNo = excel[j].__EMPTY_15;
-								type = excel[j].__EMPTY_17;
-								num = excel[j].__EMPTY_20;
-								data[count] = new MachineInfo(count,task_id,batchNo,type,num,machine_position);
-								++count;
+								m_taskId =  y + m + d + excel[j].__EMPTY_15;
+								m_produceBatchNo = excel[j].__EMPTY_15;
+								m_productModelNo = excel[j].__EMPTY_17;
+								m_currentQuantity = excel[j].__EMPTY_20;
+								data[m_index] = new MachineInfo(m_index,m_taskId,m_produceBatchNo,m_productModelNo,m_currentQuantity,m_machinePosition);
+								++m_index;
 							}
 						}
 					}
@@ -80,8 +88,10 @@ class InputFile extends React.Component{
                 excel = excel.concat(
                     XLSX.utils.sheet_to_json(workbook.Sheets['DX'])
                 );
+                console.log(excel); //array 461筆
                 //
                 var exceldata = this.getExcel(excel);
+                console.log(exceldata); //array 300筆
                 ReactDOM.render(
                     <div></div>, 
                     document.getElementById('root'));
@@ -105,7 +115,9 @@ class InputFile extends React.Component{
         return (
             <span>
                 <InputFiles accept={this.props.accept} onChange={this.onImportExcel}>
-                    <Button className="extractButton" type="primary">{this.props.name}</Button>
+                    <Button className="extractButton" type="primary">
+                        {this.props.name}
+                    </Button>
                 </InputFiles>
             </span>
         );
