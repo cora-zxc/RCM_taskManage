@@ -35,23 +35,23 @@ class SortableTable extends React.Component {
 	}
 	getMetadate = ()=> {
 		//欄位項目的建構式
-		class Metadata{
-			constructor(title,dataIndex,className,render){
-				this.title = title;
-				this.dataIndex = dataIndex;
-				this.className = className;
-				this.render = render;
-			}
+		function Metadata(title,dataIndex,className,render){
+			return {
+				title : title,
+				dataIndex : dataIndex,
+				className : className,
+				render : render,
+			};
 		}
 		//生成欄位項目
 		var data = [];
-		data.push(new Metadata('拖拉','sort','drag-visible',() => <DragHandle />));
-		data.push(new Metadata('任務編號','taskId','drag-visible'));
-		data.push(new Metadata('生產批號','produceBatchNo'));
-		data.push(new Metadata('產品型號','productModelNo'));
-		data.push(new Metadata('現況數量','currentQuantity'));
-		data.push(new Metadata('機台位置','machinePosition'));
-		data.push(new Metadata('操作','action','',() => 
+		data.push(Metadata('拖拉','sort','drag-visible',() => <DragHandle />));
+		data.push(Metadata('任務編號','taskId','drag-visible'));
+		data.push(Metadata('生產批號','produceBatchNo'));
+		data.push(Metadata('產品型號','productModelNo'));
+		data.push(Metadata('現況數量','currentQuantity'));
+		data.push(Metadata('機台位置','machinePosition'));
+		data.push(Metadata('操作','action','',() => 
 			<div>
 				<button
 					className="ant-btn"
@@ -68,10 +68,10 @@ class SortableTable extends React.Component {
 				<ManuallyEdit />
 			</div>
 		));
-		data.push(new Metadata('派工狀態','currentStatus'));
-		data.push(new Metadata('e-Rack櫃位(待測)','eRackPositionNotTested'));
-		data.push(new Metadata('e-Rack櫃位(已測)','eRackPositionTested'));
-		data.push(new Metadata('優先序','pv'));
+		data.push(Metadata('派工狀態','currentStatus'));
+		data.push(Metadata('e-Rack櫃位(待測)','eRackPositionNotTested'));
+		data.push(Metadata('e-Rack櫃位(已測)','eRackPositionTested'));
+		data.push(Metadata('優先序','pv'));
 		return data;
 	}
 	onSortEnd = ({ oldIndex, newIndex }) => {

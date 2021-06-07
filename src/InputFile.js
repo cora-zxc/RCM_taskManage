@@ -22,21 +22,21 @@ class InputFile extends React.Component{
                 d = "0" + d ;
             }
         //欄位資料的建構式
-        class MachineInfo{
-            constructor(index,taskId,produceBatchNo,productModelNo,currentQuantity,machinePosition){
-              this.index = index;
-              this.taskId = taskId;
-              this.produceBatchNo = produceBatchNo;
-              this.productModelNo = productModelNo;
-              this.currentQuantity = currentQuantity;
-              this.machinePosition = machinePosition;
-            }
-            key = '';
-            action = '';
-            currentStatus = '未派工';
-            eRackPositionNotTested = '';
-            eRackPositionTested = '';
-            pv= '50';
+        function MachineInfo(index,taskId,produceBatchNo,productModelNo,currentQuantity,machinePosition){
+            return{
+                index : index,
+                taskId : taskId,
+                produceBatchNo : produceBatchNo,
+                productModelNo : productModelNo,
+                currentQuantity : currentQuantity,
+                machinePosition : machinePosition,
+                key : '',
+                action : '',
+                currentStatus : '未派工',
+                eRackPositionNotTested : '',
+                eRackPositionTested : '',
+                pv : '50'
+            };
         }
         //迴圈取資料
         var data = [];
@@ -53,7 +53,7 @@ class InputFile extends React.Component{
 							m_produceBatchNo = excel[j].__EMPTY_2;
 							m_productModelNo = excel[j].__EMPTY_4;
 							m_currentQuantity = excel[j].__EMPTY_7;
-							data[m_index] = new MachineInfo(m_index,m_taskId,m_produceBatchNo,m_productModelNo,m_currentQuantity,m_machinePosition);
+							data[m_index] = MachineInfo(m_index,m_taskId,m_produceBatchNo,m_productModelNo,m_currentQuantity,m_machinePosition);
 							++m_index;
 						}
 						if(excel[i].hasOwnProperty('__EMPTY_12')){
@@ -63,7 +63,7 @@ class InputFile extends React.Component{
 								m_produceBatchNo = excel[j].__EMPTY_15;
 								m_productModelNo = excel[j].__EMPTY_17;
 								m_currentQuantity = excel[j].__EMPTY_20;
-								data[m_index] = new MachineInfo(m_index,m_taskId,m_produceBatchNo,m_productModelNo,m_currentQuantity,m_machinePosition);
+								data[m_index] = MachineInfo(m_index,m_taskId,m_produceBatchNo,m_productModelNo,m_currentQuantity,m_machinePosition);
 								++m_index;
 							}
 						}
