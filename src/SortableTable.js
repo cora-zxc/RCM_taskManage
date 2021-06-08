@@ -1,7 +1,7 @@
 import React from "react";
 import 'antd/dist/antd.css';
 import { sortableContainer, sortableElement } from 'react-sortable-hoc';
-import { Table } from 'antd';
+import { Table, Button, Popconfirm } from 'antd';
 import arrayMove from 'array-move';
 import { sortableHandle } from 'react-sortable-hoc';
 import { MenuOutlined } from '@ant-design/icons';
@@ -18,62 +18,26 @@ class SortableTable extends React.Component {
 			data: this.props.data
 		};
 	}
-	changeOrderStatus = (event) => {
-		event.target.parentNode.parentNode.nextSibling.textContent = "已派工";
-		event.target.parentNode.parentNode.nextSibling.style.color = "blue";
-	}
-	changeToDeleteStatus = (event) => {
-		var status = window.confirm("確定要刪除嗎？");
-		if(status){
-			event.target.parentNode.parentNode.nextSibling.textContent = "已刪除";
-			event.target.parentNode.parentNode.nextSibling.style.color = "red";
-			event.target.disabled=true;
-			event.target.previousSibling.disabled=true;
-			event.target.nextSibling.lastChild.disabled=true;
-		}
-		//console.log(event);
-	}
-	getMetadate = ()=> {
-		//欄位項目的建構式
-		function Metadata(title,dataIndex,className,render){
-			return {
-				title : title,
-				dataIndex : dataIndex,
-				className : className,
-				render : render,
-			};
-		}
-		//生成欄位項目
-		var data = [];
-		data.push(Metadata('拖拉','sort','drag-visible',() => <DragHandle />));
-		data.push(Metadata('任務編號','taskId','drag-visible'));
-		data.push(Metadata('生產批號','produceBatchNo'));
-		data.push(Metadata('產品型號','productModelNo'));
-		data.push(Metadata('現況數量','currentQuantity'));
-		data.push(Metadata('機台位置','machinePosition'));
-		data.push(Metadata('操作','action','',() => 
-			<div>
-				<button
-					className="ant-btn"
-					type="button"
-					onClick={this.changeOrderStatus} >
-					派
-				</button> 
-				<button
-					className="ant-btn"
-					type="button"
-					onClick={this.changeToDeleteStatus} >
-					刪
-				</button>
-				<ManuallyEdit />
-			</div>
-		));
-		data.push(Metadata('派工狀態','currentStatus'));
-		data.push(Metadata('e-Rack櫃位(待測)','eRackPositionNotTested'));
-		data.push(Metadata('e-Rack櫃位(已測)','eRackPositionTested'));
-		data.push(Metadata('優先序','pv'));
-		return data;
-	}
+	delete = () => {
+		console.log("已刪除");
+	  };
+	// changeOrderStatus = (event) => {
+	// 	console.log(event);
+	// 	event.target.parentNode.parentNode.nextSibling.textContent = "已派工";
+	// 	event.target.parentNode.parentNode.nextSibling.style.color = "blue";
+	// };
+	// changeToDeleteStatus = (event) => {
+	// 	var status = window.confirm("確定要刪除嗎？");
+	// 	if(status){
+	// 		console.log(event.target.parentNode.parentNode);
+	// 		event.target.parentNode.parentNode.nextSibling.textContent = "已刪除";
+	// 		event.target.parentNode.parentNode.nextSibling.style.color = "red";
+	// 		event.target.disabled=true;
+	// 		event.target.previousSibling.disabled=true;
+	// 		event.target.nextSibling.lastChild.disabled=true;
+	// 	}
+	// 	//console.log(event);
+	//}
 	onSortEnd = ({ oldIndex, newIndex }) => {
 		const { data } = this.state;
 	  	if (oldIndex !== newIndex){
@@ -97,11 +61,90 @@ class SortableTable extends React.Component {
 	}
 	render() {
 		const { data } = this.state;
-		var metadata = this.getMetadate()
+		this.columns = [
+			{
+			  title: "拖拉",
+			  dataIndex: "sort",
+			  className: "drag-visible",
+			  key: "sort",
+			  render: () => <DragHandle />
+			},
+			{
+			  title: "任務編號",
+			  dataIndex: "taskId",
+			  className: "drag-visible",
+			  key: "taskId"
+			},
+			{
+			  title: "生產批號",
+			  dataIndex: "produceBatchNo",
+			  key: "produceBatchNo"
+			},
+			{
+				title: "產品型號",
+				dataIndex: "productModelNo",
+				key: "productModelNo"
+			},
+			{
+				title: "現況數量",
+				dataIndex: "currentQuantity",
+				key: "currentQuantity"
+			},
+			{
+				title: "機台位置",
+				dataIndex: "machinePosition",
+				key: "machinePosition"
+			},
+			{
+			  title: "操作",
+			  dataIndex: "action",
+			  key: "action",
+			  render: (text, record, index) => (
+				<div>
+					<Button
+					className="ant-btn"
+					type="button"
+					// onClick={this.changeOrderStatus}
+					>
+					派
+					</Button>
+					<Popconfirm title="確定要刪除?" onConfirm={this.delete}>
+						<Button
+							className="ant-btn"
+							type="button"
+						>
+							刪
+						</Button>
+					</Popconfirm>
+					<ManuallyEdit />
+				</div>
+			  )
+			},
+			{
+				title: "派工狀態",
+				dataIndex: "currentStatus",
+				key: "currentStatus"
+			},
+			{
+				title: "e-Rack櫃位(待測)",
+				dataIndex: "eRackPositionNotTested",
+				key: "eRackPositionNotTested"
+			},
+			{
+				title: "e-Rack櫃位(已測)",
+				dataIndex: "eRackPositionTested",
+				key: "eRackPositionTested"
+			},
+			{
+				title: "優先序",
+				dataIndex: "pv",
+				key: "pv"
+			}
+		  ];
 		return (
 			<Table
 				pagination={false} //true -> 分頁
-				columns={metadata}
+				columns={this.columns}
 				dataSource={data}
 				rowKey="index"
 				components={
@@ -114,7 +157,7 @@ class SortableTable extends React.Component {
 				}
 			/>
 		);
-	}
+	};
 }
 
 export default SortableTable
