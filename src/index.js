@@ -1,13 +1,144 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import ManuallyCreate from './ManuallyCreate';
-import SortableTable from './SortableTable';
+//import './index.css';
+//import SortableTable from './SortableTable';
+import Schedulemanagement from './ScheduleManagement';
+import './ScheduleManagement.css';
+
+const dataready = [
+  {
+    key: '1',
+    machineno: "DX02",
+    priority: "1",
+    Package: '12"WAFER',
+    customerid: "L022",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "DX02",
+    location: "",
+    locationid: "",
+    status: "CP1,Run",
+    timein: "",
+    uph: "",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 0,
+  },
+  {
+    key: '2',
+    machineno: "DX02",
+    priority: "2",
+    Package: '12"WAFER',
+    customerid: "L022",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "",
+    location: "2F CP WCC",
+    locationid: "F51",
+    status: "CP1,Wait",
+    timein: "",
+    uph: "0",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 1,
+  },
+  {
+    key: '3',
+    machineno: "DX02",
+    priority: "3",
+    Package: '12"WAFER',
+    customerid: "L023",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "",
+    location: "2F CP WCC",
+    locationid: "F52",
+    status: "CP1,Wait",
+    timein: "",
+    uph: "0",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 2,
+  }
+];
+const datawait = [
+  {
+    key: '1',
+    machineno: "",
+    priority: "",
+    Package: '12"WAFER',
+    customerid: "L023",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "",
+    location: "2F CP WCC",
+    locationid: "F53",
+    status: "CP1,Wait",
+    timein: "",
+    uph: "0",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 0,
+  },
+  {
+    key: '2',
+    machineno: "",
+    priority: "",
+    Package: '12"WAFER',
+    customerid: "L022",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "",
+    location: "2F CP WCC",
+    locationid: "F52",
+    status: "CP1,Wait",
+    timein: "",
+    uph: "0",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 1,
+  },
+  {
+    key: '3',
+    machineno: "",
+    priority: "",
+    Package: '12"WAFER',
+    customerid: "L024",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "",
+    location: "2F CP WCC",
+    locationid: "F53",
+    status: "CP1,Wait",
+    timein: "",
+    uph: "0",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 2,
+  },
+];
 
 ReactDOM.render(
   <div>
-    <ManuallyCreate name="手動新增" />
-    <SortableTable />
+    <Schedulemanagement data_ready={dataready} data_wait={datawait} />
   </div>,
   document.getElementById('root')
 );
