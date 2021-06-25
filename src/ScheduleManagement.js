@@ -167,6 +167,31 @@ class Schedulemanagement extends React.Component {
     }
     this.backgroundColor = ['#02b050','#ffff02','#ff33cc','#02b0f0','#ff0001'];
   }
+  //選取到的燈色有特別匡匡標示
+  focus = (e)=>{
+    console.log(e.target.id);
+    var green = document.getElementById('btn-green');
+    var yellow = document.getElementById('btn-yellow');
+    var pink = document.getElementById('btn-pink');
+    var blue = document.getElementById('btn-blue');
+    var red = document.getElementById('btn-red');
+    green.className='btn-type';
+    yellow.className='btn-type';
+    pink.className='btn-type';
+    blue.className='btn-type';
+    red.className='btn-type';
+    if(e.target.id == 'btn-green'){
+      green.className='btn-type-choose';
+    }else if(e.target.id == 'btn-yellow'){
+      yellow.className='btn-type-choose';
+    }else if(e.target.id == 'btn-pink'){
+      pink.className='btn-type-choose';
+    }else if(e.target.id == 'btn-blue'){
+      blue.className='btn-type-choose';
+    }else{
+      red.className='btn-type-choose';
+    }
+  }
   //派出
   onChange (data_ready,data_wait){
     this.setState({
@@ -207,28 +232,28 @@ class Schedulemanagement extends React.Component {
             <div className="ant-content-children">
               <Card className="tableoverflow" >
                 <Row gutter={[24, 24]} justify="center">
-                  <Col span={4}>
+                  <Col span={3}>
                     <Dropdown overlay={menu} trigger={['click']}>
                       <Button className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                         機台型號 <DownOutlined />
                       </Button>
                     </Dropdown>
                   </Col>
-                  <Col span={4}>
-                      <div onClick={e => console.log(e.target.id)} id='btn-green' className='btn-type' style={{backgroundColor:this.backgroundColor[0]}}></div>
-                  </Col>
-                  <Col span={4}>
-                      <div onClick={e => console.log(e.target.id)} id='btn-yellow' className='btn-type' style={{backgroundColor:this.backgroundColor[1]}}></div>
-                  </Col>
-                  <Col span={4}>
-                      <div onClick={e => console.log(e.target.id)} id='btn-pink' className='btn-type' style={{backgroundColor:this.backgroundColor[2]}}></div>
-                  </Col>
-                  <Col span={4}>
-                      <div onClick={e => console.log(e.target.id)} id='btn-blue' className='btn-type' style={{backgroundColor:this.backgroundColor[3]}}></div>
-                  </Col>
-                  <Col span={4}>
-                      <div onClick={e => console.log(e.target.id)} id='btn-red' className='btn-type' style={{backgroundColor:this.backgroundColor[4]}}></div>
-                  </Col>
+                  <Col>
+                      <div onClick={this.focus} id='btn-green' className='btn-type' style={{backgroundColor:this.backgroundColor[0]}}></div>
+                    </Col>
+                    <Col>
+                        <div onClick={this.focus} id='btn-yellow' className='btn-type' style={{backgroundColor:this.backgroundColor[1]}}></div>
+                    </Col>
+                    <Col>
+                        <div onClick={this.focus} id='btn-pink' className='btn-type' style={{backgroundColor:this.backgroundColor[2]}}></div>
+                    </Col>
+                    <Col>
+                        <div onClick={this.focus} id='btn-blue' className='btn-type' style={{backgroundColor:this.backgroundColor[3]}}></div>
+                    </Col>
+                    <Col>
+                        <div onClick={this.focus} id='btn-red' className='btn-type' style={{backgroundColor:this.backgroundColor[4]}}></div>
+                    </Col>
                 </Row>
                 <Row gutter={[24, 24]} justify="end">
                   <Col xs={24} sm={24} md={24} lg={16} xl={16}>

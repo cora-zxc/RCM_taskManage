@@ -69,13 +69,14 @@ class ReadyTable extends React.Component {
       //設定變數給表格data 用於暫存變動
       const new_wd = wd.slice();
       const new_rd = rd.slice();
-      //整理派出的readydata後面的key&index
+      //整理派出的readydata後面的key&index&priority
       const index = event.target.offsetParent.parentElement.attributes[0].nodeValue;
       if(index != 0){
         var i = parseInt(index) + 1; // i為點選到的下一筆資料
         for(; i<new_rd.length ; ++i){  //開始回圈處理
           new_rd[i].key = (parseInt(new_rd[i].key) - 1).toString();
           --new_rd[i].index;
+          --new_rd[i].priority;
         }
         //整理派出的的data的key&index後再push到new_wd
         var temp = rd[event.target.offsetParent.parentElement.attributes[0].nodeValue];

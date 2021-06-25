@@ -27,15 +27,31 @@
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   height: 32px;
-  width: 106px;
+  width: 80px;
   border: 1px solid transparent;
   box-shadow: 0 2px 0 rgb(0 0 0 / 2%); 
   border-radius: 2px;
   border-color: #d9d9d9;
 }
+.btn-type-choose{
+  position: relative;
+  display: inline-block; 
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  height: 32px;
+  width: 80px;
+  border: 4px solid black;
+  box-shadow: 0 0 5px rgb(0 0 0 / 2%); 
+  border-radius: 2px;
+}
 .btn-type:hover{
+  border: 2px solid transparent;
+  box-shadow: 0 0 5px goldenrod;
+  box-sizing: border-box;
+}
+.btn-type:visited{
   border: 2px;
-  border-color: #007bff;
+  border-color: black;
 }
 .option-btn-submit{
   color: #007bff;
