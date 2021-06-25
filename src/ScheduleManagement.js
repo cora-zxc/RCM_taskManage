@@ -14,41 +14,182 @@ const onSearch = value => console.log(value)
 const menu = (
   <Menu>
     <Menu.Item key="0">
-      <li>DX01</li>
+      <li onClick={e => console.log(e.target.firstChild.data)}>DX01</li>
     </Menu.Item>
     <Menu.Item key="1">
-      <li>DX02</li>
+      <li onClick={e => console.log(e.target.firstChild.data)}>DX02</li>
     </Menu.Item>
     <Menu.Item key="2">
-      <li>DX03</li>
+      <li onClick={e => console.log(e.target.firstChild.data)}>DX03</li>
     </Menu.Item>
     <Menu.Item key="3">
-      <li>DX04</li>
+      <li onClick={e => console.log(e.target.firstChild.data)}>DX04</li>
     </Menu.Item>
   </Menu>
 );
-
+const dataready = [
+  {
+    key: '1',
+    machineno: "DX02",
+    priority: "1",
+    Package: '12"WAFER',
+    customerid: "L022",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "DX02",
+    location: "",
+    locationid: "",
+    status: "CP1,Run",
+    timein: "",
+    uph: "",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 0,
+  },
+  {
+    key: '2',
+    machineno: "DX02",
+    priority: "2",
+    Package: '12"WAFER',
+    customerid: "L023",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "",
+    location: "2F CP WCC",
+    locationid: "F51",
+    status: "CP1,Wait",
+    timein: "",
+    uph: "0",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 1,
+  },
+  {
+    key: '3',
+    machineno: "DX02",
+    priority: "3",
+    Package: '12"WAFER',
+    customerid: "L024",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "",
+    location: "2F CP WCC",
+    locationid: "F52",
+    status: "CP1,Wait",
+    timein: "",
+    uph: "0",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 2,
+  }
+];
+const datawait = [
+  {
+    key: '1',
+    machineno: "",
+    priority: "",
+    Package: '12"WAFER',
+    customerid: "M025",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "",
+    location: "2F CP WCC",
+    locationid: "F53",
+    status: "CP1,Wait",
+    timein: "",
+    uph: "0",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 0,
+  },
+  {
+    key: '2',
+    machineno: "",
+    priority: "",
+    Package: '12"WAFER',
+    customerid: "M026",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "",
+    location: "2F CP WCC",
+    locationid: "F52",
+    status: "CP1,Wait",
+    timein: "",
+    uph: "0",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 1,
+  },
+  {
+    key: '3',
+    machineno: "",
+    priority: "",
+    Package: '12"WAFER',
+    customerid: "M027",
+    lotid: "HLxxxxxxxxxx",
+    station: "CP-0210 (CP1)",
+    modelno: "AZB10820CW",
+    qty: "25",
+    platform: "",
+    location: "2F CP WCC",
+    locationid: "F53",
+    status: "CP1,Wait",
+    timein: "",
+    uph: "0",
+    bodysize: "NA",
+    temp: "25",
+    remark: "",
+    index: 2,
+  },
+];
 
 class Schedulemanagement extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      DataReady : props.data_ready,
-      DataWait : props.data_wait
+      DataReady : dataready,
+      DataWait : datawait
     }
     this.backgroundColor = ['#02b050','#ffff02','#ff33cc','#02b0f0','#ff0001'];
   }
-  onGreet(data_ready,data_wait){
+  //派出
+  onChange (data_ready,data_wait){
     this.setState({
       DataReady: data_ready,
       DataWait: data_wait
     })
     setTimeout(() => {document.getElementById('trigger').click()}, 5);
   }
-
   onSend(){
-    const { DataReady } = this.state;
-    return DataReady;
+    return this.state;
+  }
+  //刪除
+  _onChange (data_ready,data_wait){
+    
+    this.setState({
+      DataReady: data_ready,
+      DataWait: data_wait
+    })
+    
+    setTimeout(() => {document.getElementById('_trigger').click()}, 5);
+  }
+  _onSend(){
+    return this.state;
   }
   
   render() {
@@ -74,19 +215,19 @@ class Schedulemanagement extends React.Component {
                     </Dropdown>
                   </Col>
                   <Col span={4}>
-                      <div className='btn-type' style={{backgroundColor:this.backgroundColor[0]}}></div>
+                      <div onClick={e => console.log(e.target.id)} id='btn-green' className='btn-type' style={{backgroundColor:this.backgroundColor[0]}}></div>
                   </Col>
                   <Col span={4}>
-                      <div className='btn-type' style={{backgroundColor:this.backgroundColor[1]}}></div>
+                      <div onClick={e => console.log(e.target.id)} id='btn-yellow' className='btn-type' style={{backgroundColor:this.backgroundColor[1]}}></div>
                   </Col>
                   <Col span={4}>
-                      <div className='btn-type' style={{backgroundColor:this.backgroundColor[2]}}></div>
+                      <div onClick={e => console.log(e.target.id)} id='btn-pink' className='btn-type' style={{backgroundColor:this.backgroundColor[2]}}></div>
                   </Col>
                   <Col span={4}>
-                      <div className='btn-type' style={{backgroundColor:this.backgroundColor[3]}}></div>
+                      <div onClick={e => console.log(e.target.id)} id='btn-blue' className='btn-type' style={{backgroundColor:this.backgroundColor[3]}}></div>
                   </Col>
                   <Col span={4}>
-                      <div className='btn-type' style={{backgroundColor:this.backgroundColor[4]}}></div>
+                      <div onClick={e => console.log(e.target.id)} id='btn-red' className='btn-type' style={{backgroundColor:this.backgroundColor[4]}}></div>
                   </Col>
                 </Row>
                 <Row gutter={[24, 24]} justify="end">
@@ -96,8 +237,8 @@ class Schedulemanagement extends React.Component {
                     </Space>
                   </Col>
                 </Row>
-                <ReadyTable send={this.onSend.bind(this)} ready_data={DataReady} wait_data={DataWait}/><br/>
-                <WaitTable greet={this.onGreet.bind(this)} ready_data={DataReady} wait_data={DataWait}/>
+                <ReadyTable change={this._onChange.bind(this)} send={this.onSend.bind(this)} ready_data={DataReady} wait_data={DataWait}/><br/>
+                <WaitTable change={this.onChange.bind(this)} send={this._onSend.bind(this)} ready_data={DataReady} wait_data={DataWait}/>
               </Card>
             </div>
           </Content>

@@ -8,72 +8,6 @@ import WaitTable from './WaitTable';
 
 const DragHandle = sortableHandle(() => <MenuOutlined style={{ cursor: 'grab', color: '#999' }} />);
 
-// const dataready = [
-//   {
-//     key: '1',
-//     machineno: "DX02",
-//     priority: "1",
-//     Package: '12"WAFER',
-//     customerid: "L022",
-//     lotid: "HLxxxxxxxxxx",
-//     station: "CP-0210 (CP1)",
-//     modelno: "AZB10820CW",
-//     qty: "25",
-//     platform: "DX02",
-//     location: "",
-//     locationid: "",
-//     status: "CP1,Run",
-//     timein: "",
-//     uph: "",
-//     bodysize: "NA",
-//     temp: "25",
-//     remark: "",
-//     index: 0,
-//   },
-//   {
-//     key: '2',
-//     machineno: "DX02",
-//     priority: "2",
-//     Package: '12"WAFER',
-//     customerid: "L022",
-//     lotid: "HLxxxxxxxxxx",
-//     station: "CP-0210 (CP1)",
-//     modelno: "AZB10820CW",
-//     qty: "25",
-//     platform: "",
-//     location: "2F CP WCC",
-//     locationid: "F51",
-//     status: "CP1,Wait",
-//     timein: "",
-//     uph: "0",
-//     bodysize: "NA",
-//     temp: "25",
-//     remark: "",
-//     index: 1,
-//   },
-//   {
-//     key: '3',
-//     machineno: "DX02",
-//     priority: "3",
-//     Package: '12"WAFER',
-//     customerid: "L022",
-//     lotid: "HLxxxxxxxxxx",
-//     station: "CP-0210 (CP1)",
-//     modelno: "AZB10820CW",
-//     qty: "25",
-//     platform: "",
-//     location: "2F CP WCC",
-//     locationid: "F52",
-//     status: "CP1,Wait",
-//     timein: "",
-//     uph: "0",
-//     bodysize: "NA",
-//     temp: "25",
-//     remark: "",
-//     index: 2,
-//   }
-// ];
-
 const SortableItem = sortableElement(props => <tr {...props} />);
 const SortableContainer = sortableContainer(props => <tbody {...props} />);
 
@@ -81,43 +15,28 @@ class ReadyTable extends React.Component {
     constructor(props){
         super(props);
         this.state ={
-            ready_data: props.ready_data,
-            wait_data: props.wait_data
+          ready_data: props.ready_data,
+          wait_data: props.wait_data
         }
-        console.log(props.ready_data);
         this.columns=[];
-    }
-    onSortEnd = ({ oldIndex, newIndex }) => {
-      const { ready_data } = this.state;
-      console.log(ready_data);
-      if(oldIndex != 0 && newIndex != 0){
-        if (oldIndex !== newIndex) {
-          //調動順序 改priority
-          var tmp = ready_data[oldIndex].priority;
-          ready_data[oldIndex].priority = ready_data[newIndex].priority
-          ready_data[newIndex].priority = tmp;
-          //調動list
-          const newData = arrayMove([].concat(ready_data), oldIndex, newIndex).filter(el => !!el);
-          console.log('Sorted items: ', newData);
-          this.setState({ ready_data: newData });
-        }
-      }else{
-        alert("任務執行中,不可調動順序！");
-      }
     };
+
     onSortEnd = ({ oldIndex, newIndex }) => {
       const { ready_data } = this.state;
-      console.log(ready_data);
+      const { wait_data } = this.state;
       if(oldIndex != 0 && newIndex != 0){
         if (oldIndex !== newIndex) {
-          //調動順序 改priority
-          var tmp = ready_data[oldIndex].priority;
-          ready_data[oldIndex].priority = ready_data[newIndex].priority
-          ready_data[newIndex].priority = tmp;
-          //調動list
+          //調動list的key index priority
           const newData = arrayMove([].concat(ready_data), oldIndex, newIndex).filter(el => !!el);
-          console.log('Sorted items: ', newData);
+          var top = oldIndex > newIndex ? newIndex : oldIndex;
+          for(; newData.length > top; ++top){
+            newData[top].key = (top + 1).toString();
+            newData[top].index = top;
+            newData[top].priority = (top + 1).toString();
+          }
+          //更新state
           this.setState({ ready_data: newData });
+          this.props.change(newData,wait_data); //傳入父的function去set父的State
         }
       }else{
         alert("任務執行中,不可調動順序！");
@@ -142,11 +61,54 @@ class ReadyTable extends React.Component {
       return <SortableItem index={index} {...restProps} />;
     };
 
-    SubmitTask = (event) => {
-      const data = this.props.send();
-      console.log(data);
-      this.setState({ ready_data: data });
+    //點"刪"後 傳遞資料
+    MoveDownTask = (event) => {
+      //設定變數給當前的表格data
+      const wd = this.state.wait_data;
+      const rd = this.state.ready_data;
+      //設定變數給表格data 用於暫存變動
+      const new_wd = wd.slice();
+      const new_rd = rd.slice();
+      //整理派出的readydata後面的key&index
+      const index = event.target.offsetParent.parentElement.attributes[0].nodeValue;
+      if(index != 0){
+        var i = parseInt(index) + 1; // i為點選到的下一筆資料
+        for(; i<new_rd.length ; ++i){  //開始回圈處理
+          new_rd[i].key = (parseInt(new_rd[i].key) - 1).toString();
+          --new_rd[i].index;
+        }
+        //整理派出的的data的key&index後再push到new_wd
+        var temp = rd[event.target.offsetParent.parentElement.attributes[0].nodeValue];
+        temp.index = new_wd.length;
+        var num = new_wd.length+1;
+        temp.key = num.toString();
+        temp.machineno = "";
+        temp.priority = "";
+        new_wd.push(temp);
+
+        //在new_rd移除選到的資料
+        new_rd.splice(event.target.offsetParent.parentElement.attributes[0].nodeValue, 1);  
+        //更新state
+        this.props.change(new_rd,new_wd);  //傳入父的function去set父的State
+        this.setState({
+          ready_data: new_rd,
+          wait_data: new_wd
+        }); // 更新自己的State
+      }else{
+        alert("任務執行中,不可刪除！");
+      }
     }
+
+
+
+    ShowTask = () => {
+      const state = this.props.send();
+      this.setState({
+        wait_data: state.DataWait,
+        ready_data: state.DataReady
+      });
+    }
+    
     render() {
         const { ready_data } = this.state;
         this.columns = [
@@ -167,7 +129,7 @@ class ReadyTable extends React.Component {
             fixed: "left",
             className: 'drag-visible',
             render: () => (
-              <div className="option-btn-delete" onClick={this.SubmitTask}>刪</div>
+              <div className="option-btn-delete" onClick={this.MoveDownTask}>刪</div>
               )
             },
             {
@@ -255,20 +217,20 @@ class ReadyTable extends React.Component {
   
         return (
             <div>
-            <div id="trigger" onClick={this.SubmitTask}   >asdasd</div>
-            <Table
-            pagination={false}
-            dataSource={ready_data}
-            columns={this.columns}
-            rowKey="index"
-            scroll={{ x: 2200, y:300 }}
-            components={{
-                body: {
-                wrapper: this.DraggableContainer,
-                row: this.DraggableBodyRow,
-                },
-            }}
-            />
+              <div id="trigger" onClick={this.ShowTask}  style={{display:"none"}} >start</div>
+              <Table
+              pagination={false}
+              dataSource={ready_data}
+              columns={this.columns}
+              rowKey="index"
+              scroll={{ x: 2200, y:300 }}
+              components={{
+                  body: {
+                  wrapper: this.DraggableContainer,
+                  row: this.DraggableBodyRow,
+                  },
+              }}
+              />
             </div>
         );
     }
