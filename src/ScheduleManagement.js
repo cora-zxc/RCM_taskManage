@@ -1,14 +1,15 @@
 import React, {Component} from "react";
-import { Layout, Table, Popconfirm, Button, Col, Row, Card, PageHeader, Tooltip, Input, Space, Dropdown, Menu } from 'antd';
+import { Layout, Table, Popconfirm, Button, Col, Row, Card, Select,PageHeader, Tooltip, Input, Space, Dropdown, Menu } from 'antd';
 import './ScheduleManagement.css'
 // import Mynavbar from "../Global/Mynavbar.js"
 // import translate from '../../lang/translate'
-import { DownOutlined } from '@ant-design/icons'
+import { DownOutlined, SearchOutlined } from '@ant-design/icons'
 import ReadyTable from "./ReadyTable"
 import WaitTable from "./WaitTable"
 
 
 const { Content } = Layout
+const { Option } = Select;
 const { Search } = Input
 const onSearch = value => console.log(value)
 const menu = (
@@ -231,14 +232,7 @@ class Schedulemanagement extends React.Component {
             </div>
             <div className="ant-content-children">
               <Card className="tableoverflow" >
-                <Row gutter={[24, 24]} justify="center">
-                  <Col span={3}>
-                    <Dropdown overlay={menu} trigger={['click']}>
-                      <Button className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                        機台型號 <DownOutlined />
-                      </Button>
-                    </Dropdown>
-                  </Col>
+                <Row gutter={[12, 12]} justify="center">
                   <Col>
                       <div onClick={this.focus} id='btn-green' className='btn-type' style={{backgroundColor:this.backgroundColor[0]}}></div>
                     </Col>
@@ -254,13 +248,17 @@ class Schedulemanagement extends React.Component {
                     <Col>
                         <div onClick={this.focus} id='btn-red' className='btn-type' style={{backgroundColor:this.backgroundColor[4]}}></div>
                     </Col>
-                </Row>
-                <Row gutter={[24, 24]} justify="end">
-                  <Col xs={24} sm={24} md={24} lg={16} xl={16}>
-                    <Space>
-                      <Search placeholder="型號搜尋" allowClear onSearch={onSearch} style={{ width: 250 }} />
-                    </Space>
-                  </Col>
+                    <Col>
+                      <Select placeholder="機台型號" style={{ width: '130px', textAlign: 'center' }}>
+                        <Option value={0}>DX01</Option>
+                        <Option value={1}>DX02</Option>
+                        <Option value={2}>DX03</Option>
+                        <Option value={3}>DX04</Option>
+                      </Select>
+                    </Col>
+                    <Col>
+                      <Button type='default' icon={<SearchOutlined />}></Button>
+                    </Col>
                 </Row>
                 <ReadyTable change={this._onChange.bind(this)} send={this.onSend.bind(this)} ready_data={DataReady} wait_data={DataWait}/><br/>
                 <WaitTable change={this.onChange.bind(this)} send={this._onSend.bind(this)} ready_data={DataReady} wait_data={DataWait}/>
