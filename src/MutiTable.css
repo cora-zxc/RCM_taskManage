@@ -1,0 +1,18 @@
+@media only screen and (max-width: 1200px){
+    .device-effectiveness-table-card{
+      overflow: auto;
+    }
+  
+    .device-effectiveness-table-card .ant-card-body{
+      min-width: 700px;
+    }
+  }
+  
+  .device-effectiveness-table-card .ant-table-title{
+    text-align: center;
+  }
+
+.mutitable-content{
+    margin: 3%;
+    display: flex;
+}
