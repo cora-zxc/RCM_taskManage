@@ -12,12 +12,15 @@ import './index.css';
 //近期機台運行資訊
 //import Rcmoperationnews from './RcmOperationNews';
 //RCM機台管理
-import App from './App';
+//import App from './App';
+//時間效率分析 updated
+import Rcmeffectiveness from './Rcmeffectiveness';
 
 
 ReactDOM.render(
-  <div>
-    <App />
+  <div style={{padding:'3%'}}> 
+    <Rcmeffectiveness />
+    {/* <App /> */}
     {/* <Rcmoperationnews /> */}
   </div>,
   document.getElementById('root')

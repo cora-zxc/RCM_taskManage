@@ -1,0 +1,20 @@
+@media only screen and (max-width: 1200px){
+  .rcmeffectiveness-table{
+    overflow: auto;
+  }
+
+  .rcmeffectiveness-table .ant-card-body{
+    min-width: 700px;
+  }
+}
+.contentListTitle-title{
+  text-align: left;
+  width: 150px;
+  font-size: 15px;
+  text-shadow: 1px 1px white;
+  color: #444;
+}
+
+#rcmeffectiveness-card-content .ant-card-head{
+  background-color: lightblue;
+}
