@@ -15,10 +15,12 @@ import './index.css';
 //import App from './App';
 //時間效率分析 updated
 import Rcmeffectiveness from './Rcmeffectiveness';
-
+//人員手動排程履歷 (testing download excel)
+// import Opmanualschedule from './Opmanualschedule'
 
 ReactDOM.render(
-  <div style={{padding:'3%'}}> 
+  <div style={{padding:'3%'}}>
+    {/* <Opmanualschedule /> */}
     <Rcmeffectiveness />
     {/* <App /> */}
     {/* <Rcmoperationnews /> */}
